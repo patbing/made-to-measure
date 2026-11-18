@@ -1,0 +1,82 @@
+[
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 10389,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000124,
+    "ms": 13027,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 9750,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000078,
+    "ms": 8746,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 8935,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000076,
+    "ms": 9916,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 15827,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000069,
+    "ms": 8587,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 9965,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000108,
+    "ms": 8383,
+    "ok": true
+  }
+]

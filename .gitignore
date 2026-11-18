@@ -1,2 +1,3 @@
 node_modules/
-.made-to-measure/
+/.made-to-measure/
+*.raw

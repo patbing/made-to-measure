@@ -4,7 +4,7 @@
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, join, normalize, resolve } from "node:path";
-import { measure, fitTo, hamming, THRESHOLDS } from "./checks.mjs";
+import { dhash, measure, fitTo, hamming, THRESHOLDS } from "./checks.mjs";
 import { createTransport, DEFAULT_MODELS, modelInfo } from "./pollinations.mjs";
 import { scan } from "./scan.mjs";
 
@@ -79,7 +79,8 @@ const RULES = `Rules the code will measure on every picture:
 - No words, letters, numbers, logos or watermarks anywhere in the picture.
 - Where a slot has a text zone, page text in the given colour sits there: that area must be calm, low-detail and ${"dark or light enough"} for a ${THRESHOLDS.minContrast}:1 contrast with that colour (${THRESHOLDS.minContrastLarge}:1 for large text). Say in the prompt where the empty area is and how dark or light it is.
 - Colourful areas should stay within the brand hues given (within ${THRESHOLDS.hueTolerance} degrees); neutrals are always fine.
-- Each slot shows its own subject, clearly enough that someone who never saw the prompt can name it.`;
+- Each slot shows its own subject, clearly enough that someone who never saw the prompt can name it.
+- No two slots share a main subject: a viewer is also asked whether the picture shows another slot's subject, and a yes fails it.`;
 
 export async function cmdPlan(root, opts) {
   const plan = readJson(join(workDir(root), "plan.json"));
@@ -113,10 +114,10 @@ Return JSON: {"direction": "<one paragraph>", "slots": [{"id": "<slot id>", "sub
 }
 
 function failures(m) {
-  return m.results.filter((r) => !r.pass).map((r) => `${r.name}: measured ${r.value}, needs ${r.rule}`);
+  return m.results.filter((r) => !r.pass && !r.advisory).map((r) => `${r.name}: measured ${r.value}, needs ${r.rule}`);
 }
 
-async function witness(t, priced, file, subject, decoy) {
+export async function witness(t, priced, file, subject, decoy) {
   const qs = [
     ["subject", `Is the main subject of this picture: ${subject}?`],
     ...(decoy ? [["decoy", `Is the main subject of this picture: ${decoy}?`]] : []),
@@ -127,7 +128,12 @@ async function witness(t, priced, file, subject, decoy) {
   const reply = await t.json({ step: "witness", model: priced.witness.id, system, user, seed: seed(),
     imageFile: file, pricing: priced.witness.pricing, maxTokens: 800 });
   const a = Object.fromEntries(Object.entries(reply.answers ?? {}).map(([k, v]) => [k, String(v).toLowerCase().startsWith("y")]));
-  return { answers: a, trusted: a.decoy !== true && a.subject !== undefined, pass: a.subject === true && a.text === false && a.decoy !== true };
+  return { answers: a, ...witnessVerdict(a) };
+}
+
+/** A viewer must see the subject, no text, and not mistake it for another slot. */
+export function witnessVerdict(a) {
+  return { trusted: a.decoy !== true && a.subject !== undefined, pass: a.subject === true && a.text === false && a.decoy !== true };
 }
 
 async function repairPrompt(t, priced, slot, prompt, problems) {
@@ -150,11 +156,26 @@ export async function cmdMake(root, opts) {
     started: new Date().toISOString(), slots: [] };
   const passedHashes = [];
   mkdirSync(join(dir, "attempts"), { recursive: true });
+  // --only a,b: rerun those slots, keep every other slot and all earlier attempts and receipts.
+  const only = opts.only ? String(opts.only).split(",") : null;
+  const prev = only ? readJson(join(dir, "report.json")) : null;
+  const prevLedger = only ? readJson(join(dir, "receipt.json")) : [];
+  const prevEntry = (id) => prev?.slots.find((e) => e.id === id);
+  if (prev) {
+    report.started = prev.started;
+    report.reruns = [...(prev.reruns ?? []), { at: new Date().toISOString(), slots: only }];
+    for (const e of prev.slots) if (e.final && !only.includes(e.id)) passedHashes.push(dhash(join(root, e.final)));
+  }
 
   for (const slot of plan.slots) {
+    if (only && !only.includes(slot.id)) {
+      report.slots.push(prevEntry(slot.id));
+      continue;
+    }
     const target = safeOutput(root, slot.path);
+    const earlier = prevEntry(slot.id)?.attempts ?? [];
     const entry = { id: slot.id, path: slot.path, file: slot.file, line: slot.line, ref: slot.ref,
-      width: slot.width, height: slot.height, subject: slot.subject, status: "FAILED", attempts: [] };
+      width: slot.width, height: slot.height, subject: slot.subject, status: "FAILED", attempts: [...earlier] };
     report.slots.push(entry);
     if (!slot.width || !slot.height || !slot.prompt) {
       entry.status = "NOT ATTEMPTED (plan incomplete)";
@@ -168,8 +189,9 @@ export async function cmdMake(root, opts) {
     const decoy = others.length ? others[Math.floor(Math.random() * others.length)].subject : null;
     let prompt = slot.prompt;
     let best = null;
-    for (let n = 1; n <= MAX_ATTEMPTS; n++) {
-      const model = n < MAX_ATTEMPTS ? priced.image : priced.image2;
+    for (let k = 1; k <= MAX_ATTEMPTS; k++) {
+      const n = earlier.length + k;
+      const model = k < MAX_ATTEMPTS ? priced.image : priced.image2;
       const gen = generationSize(slot.width, slot.height);
       const s = seed();
       const raw = join(dir, "attempts", `${slot.id}-${n}.raw`);
@@ -210,7 +232,7 @@ export async function cmdMake(root, opts) {
       if (problems.length === 0 && witnessOk) { entry.status = "PASS"; best = { fitted, m }; break; }
       if (onlyContrast && problems.length === 1 && witnessOk) best = { fitted, m, scrim: m.scrim };
       if (witnessUnknown && problems.length === 0) { entry.status = "UNVERIFIED"; best = null; break; }
-      if (n < MAX_ATTEMPTS) {
+      if (k < MAX_ATTEMPTS) {
         try { prompt = await repairPrompt(t, priced, slot, prompt, problems); }
         catch (err) { attempt.repair_error = err.message; if (err.code === "BUDGET") break; }
       }
@@ -229,10 +251,11 @@ export async function cmdMake(root, opts) {
     }
   }
   report.finished = new Date().toISOString();
-  report.cost = { pollen: Number(t.spent().toFixed(4)), calls: t.ledger.length,
+  const ledger = [...prevLedger, ...t.ledger];
+  report.cost = { pollen: Number(ledger.reduce((a, e) => a + e.cost, 0).toFixed(4)), calls: ledger.length,
     note: "Actual cost where the API reported usage, otherwise the call's worst case. Failed calls count." };
   writeJson(join(dir, "report.json"), report);
-  writeJson(join(dir, "receipt.json"), t.ledger);
+  writeJson(join(dir, "receipt.json"), ledger);
   writeFileSync(join(dir, "report.html"), renderHtml(report));
   const counts = report.slots.reduce((c, s) => ({ ...c, [s.status]: (c[s.status] ?? 0) + 1 }), {});
   console.log(`${Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(", ")}. ${report.cost.calls} calls, ${report.cost.pollen} Pollen. Report: .made-to-measure/report.html`);
@@ -245,18 +268,19 @@ export function renderHtml(report) {
   const rows = report.slots.map((s) => `<section><h2>${esc(s.id)} <small>${esc(s.width)}×${esc(s.height)} · ${esc(s.status)}</small></h2>
 <p>${esc(s.file)}:${esc(s.line)} · subject: ${esc(s.subject)}${s.scrim ? ` · scrim ${esc(s.scrim.alpha)}` : ""}</p>
 <div class="row">${s.attempts.map((a) => `<figure>${a.file ? `<img src="../${esc(a.file)}" alt="attempt ${a.n}">` : ""}
-<figcaption>Attempt ${a.n} · ${esc(a.model)} · seed ${esc(a.seed)}<br>${(a.checks ?? []).map((c) => `<span class="${c.pass ? "ok" : "bad"}">${esc(c.name)} ${esc(c.value)}</span>`).join(" ")}
+<figcaption>Attempt ${a.n} · ${esc(a.model)} · seed ${esc(a.seed)}<br>${(a.checks ?? []).map((c) => `<span class="${c.pass ? "ok" : c.advisory ? "note" : "bad"}">${esc(c.name)} ${esc(c.value)}</span>`).join(" ")}
 ${a.witness?.answers ? `<br>witness: ${esc(JSON.stringify(a.witness.answers))}` : ""}${a.error ? `<br>error: ${esc(a.error)}` : ""}
 <details><summary>prompt</summary>${esc(a.prompt)}</details></figcaption></figure>`).join("")}</div></section>`).join("\n");
   return `<!doctype html><meta charset="utf-8"><title>made-to-measure report</title>
-<style>body{font:14px/1.4 system-ui;margin:2rem;max-width:1200px}.row{display:flex;gap:1rem;flex-wrap:wrap}figure{margin:0;max-width:360px}img{max-width:360px;display:block}.ok{color:#15803d}.bad{color:#b91c1c;font-weight:600}</style>
+<style>body{font:14px/1.4 system-ui;margin:2rem;max-width:1200px}.row{display:flex;gap:1rem;flex-wrap:wrap}figure{margin:0;max-width:360px}img{max-width:360px;display:block}.ok{color:#15803d}.bad{color:#b91c1c;font-weight:600}.note{color:#a16207}</style>
 <h1>${esc(report.project)}</h1><p>${esc(report.direction)}</p><p>${esc(report.cost?.pollen)} Pollen in ${esc(report.cost?.calls)} calls</p>${rows}`;
 }
 
-export function cmdCheck(root) {
+export function cmdCheck(root, update = false) {
   const report = readJson(join(workDir(root), "report.json"));
   const plan = readJson(join(workDir(root), "plan.json"));
   let mismatches = 0;
+  let flipped = 0;
   for (const s of report.slots) {
     const slot = plan.slots.find((p) => p.id === s.id);
     for (const a of s.attempts) {
@@ -264,12 +288,23 @@ export function cmdCheck(root) {
       const m = measure(join(root, a.file), slot, plan.brand?.colors ?? [], a.generated);
       for (const r of m.results) {
         const saved = a.checks.find((c) => c.name === r.name);
-        if (saved && (saved.pass !== r.pass || String(saved.value) !== String(r.value))) {
+        if (saved && (saved.pass !== r.pass || saved.advisory !== r.advisory || String(saved.value) !== String(r.value))) {
           mismatches++;
           console.log(`${s.id} attempt ${a.n} ${r.name}: report says ${saved.value}, measured ${r.value}`);
+          if (saved.pass !== r.pass) flipped++;
+          if (update) Object.assign(saved, r);
         }
       }
     }
+  }
+  if (update && mismatches) {
+    // Re-measuring after a rule change: values update in place; a pass/fail change needs a new `make`.
+    report.thresholds = THRESHOLDS;
+    report.remeasured = new Date().toISOString();
+    writeJson(join(workDir(root), "report.json"), report);
+    writeFileSync(join(workDir(root), "report.html"), renderHtml(report));
+    console.log(`Updated ${mismatches} measurements in the report.${flipped ? ` ${flipped} changed pass/fail: run make again for those slots.` : ""}`);
+    return flipped ? 2 : 0;
   }
   console.log(mismatches ? `${mismatches} measurements differ from the report` : "Every measurement in the report reproduces.");
   return mismatches ? 2 : 0;
@@ -277,8 +312,11 @@ export function cmdCheck(root) {
 
 export function cmdVerify(root) {
   const report = readJson(join(workDir(root), "report.json"));
-  const left = scan(root).slots.map((s) => s.ref).filter(Boolean);
-  const unwired = report.slots.filter((s) => s.status.startsWith("PASS") && s.ref && left.includes(s.ref));
+  // file + ref + alt: several slots can share one placeholder URL, and only the failed ones should still use it
+  const planned = new Map(readJson(join(workDir(root), "plan.json")).slots.map((s) => [s.id, s]));
+  const key = (s) => `${s.file}|${s.ref}|${s.alt ?? planned.get(s.id)?.alt ?? ""}`;
+  const left = new Set(scan(root).slots.filter((s) => s.ref).map(key));
+  const unwired = report.slots.filter((s) => s.status.startsWith("PASS") && s.ref && left.has(key(s)));
   for (const s of unwired) console.log(`${s.id}: passed but ${s.file} still points at ${s.ref}`);
   const code = cmdCheck(root);
   return unwired.length ? 2 : code;
@@ -326,10 +364,10 @@ async function main() {
       await cmdPlan(here, opts);
       return cmdMake(here, opts);
     }
-    case "check": return cmdCheck(root);
+    case "check": return cmdCheck(root, Boolean(opts.update));
     case "verify": return cmdVerify(root);
     default:
-      console.log("usage: fit.mjs doctor | scan <dir> | plan <dir> | make <dir> | check <dir> | verify <dir> | one \"<subject>\" --size 1200x630 [--palette \"#hex,#hex\"] [--text-zone left --text-color \"#fff\"] [--out file.jpg]\noptions: --budget <pollen> (0.10) --no-witness --overwrite --allow-paid --text-model --image-model --image-model-2 --witness-model");
+      console.log("usage: fit.mjs doctor | scan <dir> | plan <dir> | make <dir> | check <dir> [--update] | verify <dir> | one \"<subject>\" --size 1200x630 [--palette \"#hex,#hex\"] [--text-zone left --text-color \"#fff\"] [--out file.jpg]\noptions: --budget <pollen> (0.10) --only <id,id> --no-witness --overwrite --allow-paid --text-model --image-model --image-model-2 --witness-model");
       return cmd ? 1 : 0;
   }
 }

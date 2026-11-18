@@ -1,0 +1,111 @@
+{
+  "project": "after",
+  "brand": {
+    "colors": [
+      "#0f0a1e",
+      "#a21caf",
+      "#f59e0b",
+      "#f5f5f4"
+    ]
+  },
+  "direction": "Create a nocturnal zine-fair aesthetic: deep indigo night (#0f0a1e) backgrounds with neon magenta (#a21caf) and amber (#f59e0b) string-light glow and subtle rim lighting. Use a slightly grainy, analog look (riso/print texture, soft diffusion, faint paper speckle) with high-contrast highlights and moody silhouettes. Keep all colorful elements within the brand hues; neutrals stay near paper white (#f5f5f4). For any slot with a white text zone, leave that region as a calm, low-detail band that remains readable (darkened background under it with minimal highlights), matching the contrast needs.",
+  "slots": [
+    {
+      "id": "hero",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 20,
+      "ref": "https://picsum.photos/1600/900",
+      "width": 1600,
+      "height": 900,
+      "alt": "A crowd browsing zine tables under string lights at night",
+      "context": "",
+      "path": "img/hero.jpg",
+      "overlay": {
+        "x": 0,
+        "y": 0.6,
+        "w": 1,
+        "h": 0.4,
+        "color": "#ffffff",
+        "large": true
+      },
+      "subject": "zine fair crowd at night",
+      "prompt": "zine fair crowd browsing tables at night under warm string lights, silhouettes of people, scattered zines displayed on folding tables, neon magenta and amber light streaks reflecting on dark night air. Composition for 16:9 with faces and tables centered, depth into the background. Leave the bottom 40% text band (0%–100% width, y=60%–100%) as a calm, low-detail dark-to-midnight gradient with minimal highlights so white text is highly readable. Analog grain, paper speckle, no words or logos."
+    },
+    {
+      "id": "riso",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 24,
+      "ref": "https://picsum.photos/600/600",
+      "width": 600,
+      "height": 600,
+      "alt": "A risograph printer mid-print",
+      "context": "Night Shift",
+      "path": "img/riso.jpg",
+      "overlay": null,
+      "subject": "risograph printer mid-print",
+      "prompt": "risograph printer mid-print on a fair table, paper sheets feeding through rollers, visible cyan/amber neon glow from indicator LEDs (stay within #a21caf and #f59e0b), dark night reflections on the printer casing. Close-to-mid framing for 1:1, centered on the output area with motion blur on the moving page. Background fades to #0f0a1e with soft string-light bokeh. Slight riso texture and grain. No text, letters, numbers, logos, or watermarks."
+    },
+    {
+      "id": "folding",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 25,
+      "ref": "https://picsum.photos/600/600",
+      "width": 600,
+      "height": 600,
+      "alt": "Hands folding a paper zine",
+      "context": "Night Shift",
+      "path": "img/folding.jpg",
+      "overlay": null,
+      "subject": "hands folding a zine",
+      "prompt": "hands folding a small zine at a night market table, fingers creasing a thick sheet, warm amber task light on the paper edges, neon magenta light rim on knuckles. 1:1 composition with the fold action centered, shallow depth of field, dark background (#0f0a1e) and faint bokeh lights. Add subtle paper grain and analog print texture. Ensure no readable marks on the page—keep it blank. No words, letters, numbers, logos, or watermarks."
+    },
+    {
+      "id": "comics",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 26,
+      "ref": "https://picsum.photos/600/600",
+      "width": 600,
+      "height": 600,
+      "alt": "A stack of stapled comics",
+      "context": "Night Shift",
+      "path": "img/comics.jpg",
+      "overlay": null,
+      "subject": "stack of stapled comics",
+      "prompt": "stack of stapled comics on a fair table, neatly aligned covers with abstract shapes only (no text), neon magenta and amber accents on the cover designs, lit by side string lights from the left. 1:1 framing, stack centered slightly low for punchy composition, with soft shadows and gentle haze. Background deep night (#0f0a1e) with out-of-focus warm bokeh. Add faint riso/print grain for authenticity. No letters, numbers, logos, or watermarks."
+    },
+    {
+      "id": "tote",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 27,
+      "ref": "https://picsum.photos/600/600",
+      "width": 600,
+      "height": 600,
+      "alt": "A sticker-covered tote bag",
+      "context": "Night Shift",
+      "path": "img/tote.jpg",
+      "overlay": null,
+      "subject": "sticker-covered tote bag",
+      "prompt": "sticker-covered tote bag hanging from a table hook at night, stickers are abstract icons and shapes in #a21caf and #f59e0b (no text), fabric texture visible, moonlit rim light in deep indigo. 1:1 composition with tote centered, slight diagonal tilt, dark background (#0f0a1e) and soft amber bokeh behind. Keep colors within brand hues, add subtle grain and analog lighting falloff. No words, letters, numbers, logos, or watermarks."
+    },
+    {
+      "id": "og",
+      "kind": "og",
+      "file": "index.html",
+      "line": 3,
+      "ref": null,
+      "width": 1200,
+      "height": 630,
+      "alt": "Night Shift: a zine fair after dark",
+      "context": "Night Shift: a zine fair after dark",
+      "path": "og.jpg",
+      "overlay": null,
+      "subject": "Night Shift zine fair after dark",
+      "prompt": "wide view of a zine fair after dark: multiple folding tables, visitors browsing, overhead string lights forming arcs of warm amber and neon magenta glow, tents and signage stands suggested only by shapes (no readable text). 1200x630 composition with horizon around upper third, leading lines from table fronts toward the glowing center. Use deep night (#0f0a1e) with paper-white highlights and gentle foggy bokeh. Slight riso grain, high-contrast glow, no letters, numbers, logos, or watermarks."
+    }
+  ]
+}

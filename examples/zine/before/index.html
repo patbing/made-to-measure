@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Shift: a zine fair after dark</title>
+<style>
+:root { --night: #0f0a1e; --neon: #a21caf; --amber: #f59e0b; --paper: #f5f5f4; }
+body { margin: 0; background: var(--night); color: var(--paper); font-family: system-ui, sans-serif; }
+.hero { position: relative; }
+.hero img { display: block; width: 100%; height: auto; }
+/* white title across the bottom 40% of the picture */
+.hero h1 { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; margin: 0; display: flex; align-items: center; justify-content: center; font-size: clamp(32px, 6vw, 80px); color: #ffffff; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 2rem; }
+.grid img { width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <img src="https://picsum.photos/1600/900" alt="A crowd browsing zine tables under string lights at night" width="1600" height="900">
+  <h1>Night Shift</h1>
+</header>
+<section class="grid">
+  <img src="https://picsum.photos/600/600" alt="A risograph printer mid-print" width="600" height="600">
+  <img src="https://picsum.photos/600/600" alt="Hands folding a paper zine" width="600" height="600">
+  <img src="https://picsum.photos/600/600" alt="A stack of stapled comics" width="600" height="600">
+  <img src="https://picsum.photos/600/600" alt="A sticker-covered tote bag" width="600" height="600">
+</section>
+</body>
+</html>

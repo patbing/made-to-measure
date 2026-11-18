@@ -1,0 +1,10 @@
+[
+  {
+    "step": "plan",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002908,
+    "cost": 0.000662,
+    "ms": 10406,
+    "ok": true
+  }
+]

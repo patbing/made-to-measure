@@ -19,7 +19,7 @@ project's own code says the slot needs, and only pictures that pass go in.
 
 - Each picture is exactly the slot's width and height and under its weight limit.
 - Where page text sits on a picture, that area is calm and the text meets WCAG contrast.
-- Colours stay within the project's brand hues. One art direction for the whole project.
+- One art direction for the whole project, in the project's own colours.
 - Someone who never saw the prompt can name what the picture shows, and it has no stray text or logos.
 - A picture that does not pass is not wired in. You say so instead.
 
@@ -80,8 +80,8 @@ makes one measured picture in the current folder.
 | size | ffprobe on the final file | exactly the slot size, upscaled at most 2× |
 | weight | file bytes after the JPEG quality ladder | at most 350 KB (or the slot's `max_kb`) |
 | detail | luminance spread at 64×64 | at least 10 (not blank or flat) |
-| contrast | each text-zone pixel against the text colour, WCAG formula | the darkest/lightest 10% still reach 4.5:1 (3:1 large) |
-| palette | Lab hue of colourful pixels | at most 25% are more than 25° from every brand hue |
+| contrast | each text-zone pixel against the text colour, WCAG formula | the worst 2% of pixels still reach 4.5:1 (3:1 large) |
+| palette (note only) | Lab hue of colourful pixels | reported, never blocks: at most 25% more than 25° from every brand hue |
 | distinct | 64-bit difference hash | differs from every other slot |
 | witness | a second model sees only the picture: is it the subject, is it another slot's subject, is there text? | yes, no, no |
 
@@ -102,6 +102,9 @@ Details and formulas: [references/checks.md](references/checks.md).
 
 - Image models add text when asked not to. The witness catches it; repairs say
   "no lettering" again with the measured failure.
+- Two slots with overlapping subjects ("sync flow" and "syncing uploads") fail
+  each other: the witness is also asked about another slot's subject. Give every
+  slot a subject a stranger could tell apart before `make`.
 - "Leave space for text" is too vague. Say where (left 45%) and how dark.
 - Models round sizes to multiples of 16; the script generates near the slot's
   aspect and crops, so never resize the output yourself.

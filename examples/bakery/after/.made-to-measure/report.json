@@ -1,0 +1,378 @@
+{
+  "project": "after",
+  "direction": "Cinematic wood-fired bakery imagery with a pre-dawn glow: smoky, ember-warm lighting in brand hues (burnt orange #c2410c and dark brown #78350f), wheat highlights #fef3c7, and near-black shadows #1c1917. Use a photographic style with subtle film grain, shallow depth of field, and crisp textures on cracked crust and flour dust. Mood is early-morning Leith craft—embers, soot-speckled brick, and gentle steam—while keeping backgrounds simple and low-detail so the bread remains the clear hero.",
+  "models": {
+    "text": "openai/gpt-5.4-nano",
+    "image": "black-forest-labs/flux.1-schnell",
+    "image2": "tongyi-mai/z-image-turbo",
+    "witness": "openai/gpt-6-luna"
+  },
+  "thresholds": {
+    "maxUpscale": 2,
+    "maxKb": 350,
+    "minDetail": 10,
+    "minContrast": 4.5,
+    "minContrastLarge": 3,
+    "contrastPercentile": 0.02,
+    "maxOffPalette": 0.25,
+    "hueTolerance": 25,
+    "minChroma": 12,
+    "minDistinct": 5
+  },
+  "started": "2026-11-18T12:18:32.561Z",
+  "slots": [
+    {
+      "id": "hero",
+      "path": "img/hero.jpg",
+      "file": "index.html",
+      "line": 11,
+      "ref": "https://placehold.co/1344x768",
+      "width": 1344,
+      "height": 768,
+      "subject": "Bakers loading loaves",
+      "status": "PASS",
+      "attempts": [
+        {
+          "n": 1,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 1724965533,
+          "prompt": "Bakers loading wood-fired sourdough loaves into a glowing brick oven, pre-dawn atmosphere with drifting steam and ember light. Composition: keep the entire left 45% as a calm, dark shadowy brick background (very low detail, near-black #1c1917) for a clean white text overlay contrast; place the action on the right. Close, documentary feel with warm rim light in #c2410c and deep browns #78350f; no text.",
+          "generated": {
+            "width": 1344,
+            "height": 768
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "1344x768",
+              "pass": true,
+              "rule": "exactly 1344x768, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 66,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 29.31,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "contrast",
+              "value": 8.02,
+              "pass": true,
+              "rule": "#ffffff text over the zone: low 2% at least 3:1"
+            },
+            {
+              "name": "palette",
+              "value": 0.01,
+              "pass": true,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/hero-1.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "subject": true,
+              "decoy": false
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
+        }
+      ],
+      "final": ".made-to-measure/attempts/hero-1.jpg"
+    },
+    {
+      "id": "rye",
+      "path": "img/rye.jpg",
+      "file": "index.html",
+      "line": 20,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "subject": "Dark rye sourdough loaf",
+      "status": "PASS",
+      "attempts": [
+        {
+          "n": 1,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 704567820,
+          "prompt": "Dark rye sourdough loaf with a deeply cracked crust, flour lightly dusted, steam faint in warm ember light. 4:3 framing: loaf centered, angled slightly to show crack lines and blistered surface. Background is a softly blurred dark wooden peel and soot-speckled brick, low detail, tinted with near-black #1c1917 and warm browns #78350f; subtle highlights in wheat #fef3c7. Photographic, shallow depth of field. No text or labels.",
+          "generated": {
+            "width": 800,
+            "height": 608
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "800x600",
+              "pass": true,
+              "rule": "exactly 800x600, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 131,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 59.91,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "palette",
+              "value": 0,
+              "pass": true,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/rye-1.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "decoy": false,
+              "subject": true
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
+        }
+      ],
+      "final": ".made-to-measure/attempts/rye-1.jpg"
+    },
+    {
+      "id": "country",
+      "path": "img/country.jpg",
+      "file": "index.html",
+      "line": 21,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "subject": "Floured country boule",
+      "status": "PASS",
+      "attempts": [
+        {
+          "n": 1,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 1905867023,
+          "prompt": "Round country sourdough boule dusted with flour, rustic scoring, airy rustic crumb hinted at a torn edge. Place the loaf in the middle with gentle diagonal lift for depth. Background: minimalist linen cloth and warm oven glow, blurred, using wheat #fef3c7 highlights and deep ember browns #78350f. Lighting is soft and directional, emphasizing texture and cracks; shallow DOF, subtle film grain. No words or branding.",
+          "generated": {
+            "width": 800,
+            "height": 608
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "800x600",
+              "pass": true,
+              "rule": "exactly 800x600, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 124,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 60.93,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "palette",
+              "value": 0,
+              "pass": true,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/country-1.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "decoy": false,
+              "subject": true
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
+        }
+      ],
+      "final": ".made-to-measure/attempts/country-1.jpg"
+    },
+    {
+      "id": "buns",
+      "path": "img/buns.jpg",
+      "file": "index.html",
+      "line": 22,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "subject": "Cardamom buns on tray",
+      "status": "PASS",
+      "attempts": [
+        {
+          "n": 1,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 479852582,
+          "prompt": "Cardamom buns, glossy and glazed with twisted spirals, arranged on a wooden tray near the edge of a wood-fired oven. 4:3 framing: buns slightly off-center for space, with steam and embers creating warm bokeh. Palette stays within #c2410c amber glow and #78350f browns, with creamy highlights #fef3c7 on the glaze. Background is dark and low-detail to keep buns clearly recognizable. Photoreal, shallow depth of field, no text.",
+          "generated": {
+            "width": 800,
+            "height": 608
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "800x600",
+              "pass": true,
+              "rule": "exactly 800x600, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 68,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 54.65,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "palette",
+              "value": 0,
+              "pass": true,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/buns-1.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "subject": true,
+              "decoy": false
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
+        }
+      ],
+      "final": ".made-to-measure/attempts/buns-1.jpg"
+    },
+    {
+      "id": "og",
+      "path": "og.jpg",
+      "file": "index.html",
+      "line": 3,
+      "ref": null,
+      "width": 1200,
+      "height": 630,
+      "subject": "Leith wood-fired sourdough scene",
+      "status": "PASS",
+      "attempts": [
+        {
+          "n": 1,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 1084452142,
+          "prompt": "Crumb & Ember style wood-fired sourdough in a Leith-inspired setting: an open oven mouth with glowing coals, two or three loaves on a wooden peel mid-transfer, and a baker’s hands in soot-lit warmth. Wide 1.9:1 composition: let the top sky/oven arch be darker and less detailed in near-black #1c1917; focus light on the loaves using ember orange #c2410c and crust browns #78350f, wheat highlights #fef3c7. Cinematic photo, subtle grain, no text.",
+          "generated": {
+            "width": 1200,
+            "height": 624
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "1200x630",
+              "pass": true,
+              "rule": "exactly 1200x630, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 107,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 31.11,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "palette",
+              "value": 0,
+              "pass": true,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/og-1.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "decoy": false,
+              "subject": true
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
+        }
+      ],
+      "final": ".made-to-measure/attempts/og-1.jpg"
+    }
+  ],
+  "finished": "2026-11-18T12:20:18.582Z",
+  "cost": {
+    "pollen": 0.0105,
+    "calls": 10,
+    "note": "Actual cost where the API reported usage, otherwise the call's worst case. Failed calls count."
+  },
+  "remeasured": "2026-11-18T12:30:17.588Z"
+}

@@ -85,7 +85,15 @@ test("plan → make → check on the fixture site, with Pollinations replaced by
     assert.deepEqual(calls, ["plan", "image:hero", "witness", "repair", "image:hero", "witness", "image:rye", "witness"]);
     assert.ok(report.cost.pollen > 0.006 && report.cost.pollen < 0.01);
     assert.equal(cmdCheck(root), 0);
-    // a second run never overwrites the pictures it placed
+    // --only reruns one slot and keeps the other slot, the earlier attempts and the receipt
+    const before = JSON.parse(readFileSync(join(root, ".made-to-measure", "receipt.json"), "utf8")).length;
+    assert.equal(await cmdMake(root, { only: "dark-rye-loaf", overwrite: true }), 0);
+    const rerun = JSON.parse(readFileSync(join(root, ".made-to-measure", "report.json"), "utf8"));
+    const rye2 = rerun.slots.find((s) => s.id === "dark-rye-loaf");
+    assert.deepEqual(rye2.attempts.map((a) => a.n), [1, 2]);
+    assert.deepEqual(rerun.slots.find((s) => s.id === "bakers-at-dawn"), hero);
+    assert.equal(JSON.parse(readFileSync(join(root, ".made-to-measure", "receipt.json"), "utf8")).length, before + 2);
+    // a run without --overwrite never replaces the pictures it placed
     const again = await cmdMake(root, {});
     assert.equal(again, 2);
   } finally {

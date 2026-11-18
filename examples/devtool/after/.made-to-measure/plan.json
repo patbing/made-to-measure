@@ -1,0 +1,62 @@
+{
+  "project": "after",
+  "brand": {
+    "colors": [
+      "#0e7490",
+      "#164e63",
+      "#ecfeff"
+    ]
+  },
+  "direction": "Create a sleek, modern isometric tech illustration with soft volumetric lighting and gentle ocean mist. Use only the brand hues—tide teal (#0e7490), deep sea blue (#164e63), and sea foam (#ecfeff)—with neutrals for balance. Mood is calm, reliable, and “always in sync,” avoiding clutter. Composition should feel clean and engineered: crisp edges, subtle gradients, and light reflections like water on metal. No text, letters, logos, or watermarks anywhere.",
+  "slots": [
+    {
+      "id": "banner",
+      "kind": "missing",
+      "file": "docs/index.html",
+      "line": 11,
+      "ref": "banner.png",
+      "width": 1280,
+      "height": 640,
+      "alt": "tidewater: watch a folder, sync it to any S3 bucket",
+      "context": "tidewater",
+      "path": "docs/banner.jpg",
+      "overlay": null,
+      "subject": "folder-to-S3 sync flow",
+      "prompt": "folder-to-S3 sync flow in an isometric view: a small open folder icon on the left sending glowing data packets along a curved cable of sea-foam light toward a distant simplified S3 bucket-like container on the right (no text). A soft tide-teal glow pulse travels across the path, implying resumable uploads. Background: dark deep-sea blue with faint ocean-mist gradient. Leave the entire center area clean for clear focal framing, no text or symbols. Cinematic lighting, crisp edges.",
+      "also": [
+        "README.md:3"
+      ]
+    },
+    {
+      "id": "og",
+      "kind": "og",
+      "file": "docs/index.html",
+      "line": 3,
+      "ref": null,
+      "width": 1200,
+      "height": 630,
+      "alt": "tidewater: watch a folder, sync it to any S3 bucket",
+      "context": "tidewater: folder-to-S3 sync",
+      "path": "docs/og.jpg",
+      "overlay": null,
+      "subject": "watcher syncing uploads",
+      "prompt": "watcher syncing uploads as a minimalist isometric scene: a command console-shaped slab (generic, no letters) sits above a folder platform, with several file blocks sliding onto a transfer arc and landing into a bucket-like container (no text). Indicate “resumable” via a dotted partial transfer trail that continues smoothly from a break point. Use tide teal and deep sea blue with sea-foam highlights for the moving elements. Background is a smooth gradient ocean haze. Keep composition balanced with generous empty space near the edges; no text or logos."
+    },
+    {
+      "id": "empty-state",
+      "kind": "missing",
+      "file": "README.md",
+      "line": 13,
+      "ref": "docs/empty-state.png",
+      "width": 960,
+      "height": 540,
+      "alt": "An empty harbour at low tide",
+      "context": "When nothing has changed",
+      "path": "docs/empty-state.jpg",
+      "overlay": null,
+      "subject": "empty harbour at low tide",
+      "prompt": "empty harbour at low tide, wide isometric landscape: still water receding to reveal wet sand and exposed wooden pilings, with gentle sea-foam streaks and reflective puddles. Subtle tide-teal light wraps the scene from the horizon; deep sea blue sky with faint mist bands. In the foreground, a single quiet dock walkway leads toward the waterline, suggesting “nothing changed.” No people, no buildings with signage, no text, no symbols. Natural calm lighting, high clarity, minimal clutter."
+    }
+  ],
+  "about": "tidewater is a command-line tool: it watches a folder and keeps it in sync with an S3 bucket. One binary, no daemon, resumable uploads. Its colours are tide teal, deep sea blue and sea foam."
+}

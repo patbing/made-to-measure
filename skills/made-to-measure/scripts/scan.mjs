@@ -8,7 +8,7 @@ const TEXT_EXT = new Set([".html", ".htm", ".jsx", ".tsx", ".vue", ".svelte", ".
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".next", ".made-to-measure", "out"]);
 const IMG_EXT = /\.(jpe?g|png|webp|gif|avif)$/i;
 const PLACEHOLDER = /https?:\/\/(?:www\.)?(placehold\.co|via\.placeholder\.com|placeholder\.com|picsum\.photos|dummyimage\.com|placekitten\.com|fakeimg\.pl|loremflickr\.com)\/[^\s"'`)<>]*/gi;
-const LOCAL_REF = /(?:src|href|content)\s*=\s*["']([^"'#?]+?\.(?:jpe?g|png|webp|gif|avif))["']|url\(\s*["']?([^"')#?]+?\.(?:jpe?g|png|webp|gif|avif))["']?\s*\)|!\[[^\]]*\]\(\s*([^)\s]+?\.(?:jpe?g|png|webp|gif|avif))/gi;
+const LOCAL_REF = /(?:src|href|content)\s*=\s*["']([^"'#?]+?\.(?:jpe?g|png|webp|gif|avif))["']|url\(\s*["']?([^"')#?]+?\.(?:jpe?g|png|webp|gif|avif))["']?\s*\)|!\[([^\]]*)\]\(\s*([^)\s]+?\.(?:jpe?g|png|webp|gif|avif))/gi;
 
 function* files(root, dir = root) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -46,7 +46,7 @@ function nearestHeading(text, i) {
 }
 
 const lineOf = (text, i) => text.slice(0, i).split("\n").length;
-const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "image";
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" ").slice(0, 5).join("-") || "image";
 
 /** Brand colours: hex values in CSS custom properties, most used first. */
 export function brandColors(cssTexts) {
@@ -75,11 +75,11 @@ export function scan(rootDir) {
     const text = readFileSync(file, "utf8");
     const rel = relative(root, file).split(sep).join("/");
     if (/\.(css|vue|svelte|astro|html?)$/i.test(file)) css.push(text);
-    const base = (i, ref, kind, size) => {
-      const tag = tagAround(text, i);
+    const base = (i, ref, kind, size, mdAlt) => {
+      const tag = mdAlt === undefined ? tagAround(text, i) : "";
       const width = Number(attr(tag, "width")) || size?.width || null;
       const height = Number(attr(tag, "height")) || size?.height || null;
-      const alt = attr(tag, "alt") ? tag.match(/\balt\s*=\s*["']([^"']*)/i)?.[1] ?? "" : "";
+      const alt = mdAlt !== undefined ? mdAlt : attr(tag, "alt") ? tag.match(/\balt\s*=\s*["']([^"']*)/i)?.[1] ?? "" : "";
       const context = nearestHeading(text, i);
       const id = uniqueId(alt || context || kind);
       return { id, kind, file: rel, line: lineOf(text, i), ref, width, height, alt, context,
@@ -91,7 +91,7 @@ export function scan(rootDir) {
       slots.push(slot);
     }
     for (const m of text.matchAll(LOCAL_REF)) {
-      const ref = m[1] ?? m[2] ?? m[3];
+      const ref = m[1] ?? m[2] ?? m[4];
       if (/^(https?:|data:|\/\/)/i.test(ref) || !IMG_EXT.test(ref)) continue;
       const candidates = ref.startsWith("/")
         ? [join(root, ref), join(root, "public", ref)]
@@ -99,8 +99,18 @@ export function scan(rootDir) {
       if (candidates.some(existsSync)) continue;
       const target = relative(root, candidates.at(-1)).split(sep).join("/");
       if (target.startsWith("..")) continue;
-      const slot = base(m.index, ref, "missing");
-      slot.path = target.replace(/\.(gif|avif)$/i, ".jpg");
+      const path = target.replace(/\.(gif|avif)$/i, ".jpg");
+      const slot = base(m.index, ref, "missing", null, m[3]);
+      const same = slots.find((s) => s.path === path);
+      if (same) {
+        // one picture referenced from several files: one slot, every place listed
+        same.width ??= slot.width;
+        same.height ??= slot.height;
+        same.alt ||= slot.alt;
+        (same.also ??= []).push(`${slot.file}:${slot.line}`);
+        continue;
+      }
+      slot.path = path;
       slots.push(slot);
     }
     if (/\.html?$/i.test(file) && /<head[\s>]/i.test(text) && !/og:image/i.test(text)) {

@@ -10,7 +10,7 @@ export const THRESHOLDS = {
   minDetail: 10, // luminance standard deviation at 64x64
   minContrast: 4.5, // WCAG AA, normal text
   minContrastLarge: 3.0, // WCAG AA, large text
-  contrastPercentile: 0.1, // the darkest/lightest 10% of the text zone decides
+  contrastPercentile: 0.02, // the worst 2% of the text zone decides, so a small bright patch counts
   maxOffPalette: 0.25, // share of colourful pixels far from every brand hue
   hueTolerance: 25, // degrees
   minChroma: 12, // Lab chroma below this counts as neutral
@@ -190,10 +190,12 @@ export function measure(file, slot, brandColors = [], generated) {
   }
   if (brandColors.length) {
     const off = offPalette(pixels(file, 64, 64), brandColors);
+    // Advisory: in the pilot, navy rated "off" for a teal brand; hue distance alone does not separate on- from off-brand.
     add("palette", round(off), off <= t.maxOffPalette,
-      `at most ${t.maxOffPalette * 100}% of colourful pixels off the brand hues`);
+      `advisory: at most ${t.maxOffPalette * 100}% of colourful pixels off the brand hues`);
+    results.at(-1).advisory = true;
   }
-  return { results, pass: results.every((r) => r.pass), scrim, hash: dhash(file) };
+  return { results, pass: results.every((r) => r.pass || r.advisory), scrim, hash: dhash(file) };
 }
 
 const round = (x) => Math.round(x * 100) / 100;

@@ -1,0 +1,218 @@
+[
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 10351,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002887,
+    "cost": 0.000222,
+    "ms": 6283,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 14090,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.00289,
+    "cost": 0.000213,
+    "ms": 6885,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "tongyi-mai/z-image-turbo",
+    "worst": 0.004,
+    "cost": 0.004,
+    "ms": 8455,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 8381,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.00289,
+    "cost": 0.000204,
+    "ms": 6486,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 7227,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.00014,
+    "ms": 9085,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.00289,
+    "cost": 0.000234,
+    "ms": 6912,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "tongyi-mai/z-image-turbo",
+    "worst": 0.004,
+    "cost": 0.004,
+    "ms": 7523,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 9087,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002887,
+    "cost": 0.000216,
+    "ms": 6860,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 11165,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002889,
+    "cost": 0.000225,
+    "ms": 6179,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "tongyi-mai/z-image-turbo",
+    "worst": 0.004,
+    "cost": 0.004,
+    "ms": 9869,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000077,
+    "ms": 10070,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 25154,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000109,
+    "ms": 8330,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 7850,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000158,
+    "ms": 9053,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002889,
+    "cost": 0.000218,
+    "ms": 6549,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 9365,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000107,
+    "ms": 9172,
+    "ok": true
+  },
+  {
+    "step": "repair",
+    "model": "openai/gpt-5.4-nano",
+    "worst": 0.002891,
+    "cost": 0.000235,
+    "ms": 7312,
+    "ok": true
+  },
+  {
+    "step": "image",
+    "model": "tongyi-mai/z-image-turbo",
+    "worst": 0.004,
+    "cost": 0.004,
+    "ms": 8176,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.000459,
+    "cost": 0.000109,
+    "ms": 7289,
+    "ok": true
+  }
+]

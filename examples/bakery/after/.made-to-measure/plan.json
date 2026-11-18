@@ -1,0 +1,96 @@
+{
+  "project": "after",
+  "brand": {
+    "colors": [
+      "#c2410c",
+      "#78350f",
+      "#fef3c7",
+      "#1c1917"
+    ]
+  },
+  "direction": "Cinematic wood-fired bakery imagery with a pre-dawn glow: smoky, ember-warm lighting in brand hues (burnt orange #c2410c and dark brown #78350f), wheat highlights #fef3c7, and near-black shadows #1c1917. Use a photographic style with subtle film grain, shallow depth of field, and crisp textures on cracked crust and flour dust. Mood is early-morning Leith craft—embers, soot-speckled brick, and gentle steam—while keeping backgrounds simple and low-detail so the bread remains the clear hero.",
+  "slots": [
+    {
+      "id": "hero",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 11,
+      "ref": "https://placehold.co/1344x768",
+      "width": 1344,
+      "height": 768,
+      "alt": "Bakers loading loaves into a wood-fired oven before dawn",
+      "context": "",
+      "path": "img/hero.jpg",
+      "overlay": {
+        "x": 0,
+        "y": 0,
+        "w": 0.45,
+        "h": 1,
+        "color": "#ffffff",
+        "large": true
+      },
+      "subject": "Bakers loading loaves",
+      "prompt": "Bakers loading wood-fired sourdough loaves into a glowing brick oven, pre-dawn atmosphere with drifting steam and ember light. Composition: keep the entire left 45% as a calm, dark shadowy brick background (very low detail, near-black #1c1917) for a clean white text overlay contrast; place the action on the right. Close, documentary feel with warm rim light in #c2410c and deep browns #78350f; no text."
+    },
+    {
+      "id": "rye",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 20,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "alt": "A dark rye loaf with a cracked crust",
+      "context": "This week's loaves",
+      "path": "img/rye.jpg",
+      "overlay": null,
+      "subject": "Dark rye sourdough loaf",
+      "prompt": "Dark rye sourdough loaf with a deeply cracked crust, flour lightly dusted, steam faint in warm ember light. 4:3 framing: loaf centered, angled slightly to show crack lines and blistered surface. Background is a softly blurred dark wooden peel and soot-speckled brick, low detail, tinted with near-black #1c1917 and warm browns #78350f; subtle highlights in wheat #fef3c7. Photographic, shallow depth of field. No text or labels."
+    },
+    {
+      "id": "country",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 21,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "alt": "A round country sourdough dusted with flour",
+      "context": "Dark rye",
+      "path": "img/country.jpg",
+      "overlay": null,
+      "subject": "Floured country boule",
+      "prompt": "Round country sourdough boule dusted with flour, rustic scoring, airy rustic crumb hinted at a torn edge. Place the loaf in the middle with gentle diagonal lift for depth. Background: minimalist linen cloth and warm oven glow, blurred, using wheat #fef3c7 highlights and deep ember browns #78350f. Lighting is soft and directional, emphasizing texture and cracks; shallow DOF, subtle film grain. No words or branding."
+    },
+    {
+      "id": "buns",
+      "kind": "placeholder",
+      "file": "index.html",
+      "line": 22,
+      "ref": "https://placehold.co/800x600",
+      "width": 800,
+      "height": 600,
+      "alt": "Cardamom buns glazed and twisted",
+      "context": "Country sourdough",
+      "path": "img/buns.jpg",
+      "overlay": null,
+      "subject": "Cardamom buns on tray",
+      "prompt": "Cardamom buns, glossy and glazed with twisted spirals, arranged on a wooden tray near the edge of a wood-fired oven. 4:3 framing: buns slightly off-center for space, with steam and embers creating warm bokeh. Palette stays within #c2410c amber glow and #78350f browns, with creamy highlights #fef3c7 on the glaze. Background is dark and low-detail to keep buns clearly recognizable. Photoreal, shallow depth of field, no text."
+    },
+    {
+      "id": "og",
+      "kind": "og",
+      "file": "index.html",
+      "line": 3,
+      "ref": null,
+      "width": 1200,
+      "height": 630,
+      "alt": "Crumb & Ember: wood-fired sourdough in Leith",
+      "context": "Crumb &amp; Ember: wood-fired sourdough",
+      "path": "og.jpg",
+      "overlay": null,
+      "subject": "Leith wood-fired sourdough scene",
+      "prompt": "Crumb & Ember style wood-fired sourdough in a Leith-inspired setting: an open oven mouth with glowing coals, two or three loaves on a wooden peel mid-transfer, and a baker’s hands in soot-lit warmth. Wide 1.9:1 composition: let the top sky/oven arch be darker and less detailed in near-black #1c1917; focus light on the loaves using ember orange #c2410c and crust browns #78350f, wheat highlights #fef3c7. Cinematic photo, subtle grain, no text."
+    }
+  ]
+}

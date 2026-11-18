@@ -22,8 +22,8 @@ nearly single-colour picture.
 ## contrast
 Only for slots with an `overlay` (text drawn on the picture). The text zone is
 cropped and scaled to 48×48. Each pixel's WCAG contrast ratio against the text
-colour is computed with the WCAG relative-luminance formula, and the 10th
-percentile must reach 4.5:1 (3:1 for large text). Using a low percentile, not
+colour is computed with the WCAG relative-luminance formula, and the 2nd
+percentile must reach 4.5:1 (3:1 for large text). The 2nd percentile, not
 the mean, means a bright patch behind a word counts.
 
 When contrast is the only failure, the script finds the smallest opacity of a
@@ -36,6 +36,12 @@ Only when the plan has `brand.colors`. Pixels at 64×64 are converted to CIE Lab
 Pixels with chroma under 12 are neutral and never count. Of the colourful
 pixels, at most 25% may have a hue more than 25° from every colourful brand
 colour.
+
+**Advisory, not a gate.** The report shows it as a note and the picture still
+passes. In the pilot this rule rejected 16 tries; shown to the witness later,
+8 of them were clean pictures of the right subject (a navy night sky counted as
+"off" for a teal brand). Hue distance alone does not separate on-brand from
+off-brand, so the plan asks the image model for brand hues and the person decides.
 
 ## distinct
 A 64-bit difference hash (9×8 grey thumbnail). A slot's picture must differ from
