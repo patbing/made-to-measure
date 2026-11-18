@@ -1,0 +1,10 @@
+{
+  "name": "made-to-measure",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent skill: fill a project's empty image slots with Pollinations pictures that code has measured.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test \"tests/*.test.mjs\"" }
+}

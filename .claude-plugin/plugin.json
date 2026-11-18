@@ -1,0 +1,8 @@
+{
+  "name": "made-to-measure",
+  "description": "Fills empty image slots with pictures drawn by Pollinations models and measured by code before they are wired in.",
+  "version": "0.1.0",
+  "author": { "name": "patbing", "url": "https://github.com/patbing" },
+  "homepage": "https://github.com/patbing/made-to-measure",
+  "license": "MIT"
+}

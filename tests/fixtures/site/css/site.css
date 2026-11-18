@@ -1,0 +1,2 @@
+:root { --brand: #b45309; --ink: #1c1917; --cream: #fef3c7; }
+.btn { color: var(--brand); }

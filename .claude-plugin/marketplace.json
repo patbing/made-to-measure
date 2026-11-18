@@ -1,0 +1,11 @@
+{
+  "name": "made-to-measure",
+  "owner": { "name": "patbing" },
+  "plugins": [
+    {
+      "name": "made-to-measure",
+      "source": "./",
+      "description": "Fills empty image slots with pictures drawn by Pollinations models and measured by code before they are wired in."
+    }
+  ]
+}
