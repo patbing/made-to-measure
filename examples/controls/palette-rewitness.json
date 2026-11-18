@@ -1,0 +1,199 @@
+{
+  "about": "The 16 pilot attempts the palette rule rejected while it was still a gate, shown to the witness afterwards (openai/gpt-6-luna, same questions as make). Every code check except palette passed on each. 8 pass, 8 have text.",
+  "at": "2026-11-18T12:43:39.720Z",
+  "pollen": 0.00176,
+  "results": [
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/banner-1.jpg",
+      "slot": "devtool/banner",
+      "try": 1,
+      "decoy": "watcher syncing uploads",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/banner-2.jpg",
+      "slot": "devtool/banner",
+      "try": 2,
+      "decoy": "watcher syncing uploads",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/banner-3.jpg",
+      "slot": "devtool/banner",
+      "try": 3,
+      "decoy": "empty harbour at low tide",
+      "answers": {
+        "decoy": false,
+        "subject": true,
+        "text": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/og-1.jpg",
+      "slot": "devtool/og",
+      "try": 1,
+      "decoy": "folder-to-S3 sync flow",
+      "answers": {
+        "text": true,
+        "subject": false,
+        "decoy": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/og-3.jpg",
+      "slot": "devtool/og",
+      "try": 3,
+      "decoy": "empty harbour at low tide",
+      "answers": {
+        "text": false,
+        "decoy": false,
+        "subject": true
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/empty-state-1.jpg",
+      "slot": "devtool/empty-state",
+      "try": 1,
+      "decoy": "watcher syncing uploads",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/devtool/after/.made-to-measure/attempts/empty-state-2.jpg",
+      "slot": "devtool/empty-state",
+      "try": 2,
+      "decoy": "folder-to-S3 sync flow",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/hero-1.jpg",
+      "slot": "zine/hero",
+      "try": 1,
+      "decoy": "risograph printer mid-print",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/hero-2.jpg",
+      "slot": "zine/hero",
+      "try": 2,
+      "decoy": "risograph printer mid-print",
+      "answers": {
+        "text": true,
+        "decoy": false,
+        "subject": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/hero-3.jpg",
+      "slot": "zine/hero",
+      "try": 3,
+      "decoy": "risograph printer mid-print",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/riso-1.jpg",
+      "slot": "zine/riso",
+      "try": 1,
+      "decoy": "hands folding a zine",
+      "answers": {
+        "text": true,
+        "subject": true,
+        "decoy": false
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/riso-2.jpg",
+      "slot": "zine/riso",
+      "try": 2,
+      "decoy": "stack of stapled comics",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/riso-3.jpg",
+      "slot": "zine/riso",
+      "try": 3,
+      "decoy": "Night Shift zine fair after dark",
+      "answers": {
+        "text": true,
+        "decoy": false,
+        "subject": true
+      },
+      "pass": false
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/folding-1.jpg",
+      "slot": "zine/folding",
+      "try": 1,
+      "decoy": "sticker-covered tote bag",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": false
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/folding-2.jpg",
+      "slot": "zine/folding",
+      "try": 2,
+      "decoy": "Night Shift zine fair after dark",
+      "answers": {
+        "text": false,
+        "decoy": false,
+        "subject": true
+      },
+      "pass": true
+    },
+    {
+      "file": "examples/zine/after/.made-to-measure/attempts/comics-1.jpg",
+      "slot": "zine/comics",
+      "try": 1,
+      "decoy": "hands folding a zine",
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": true
+      },
+      "pass": false
+    }
+  ]
+}

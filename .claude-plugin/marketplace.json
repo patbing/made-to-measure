@@ -1,6 +1,11 @@
 {
   "name": "made-to-measure",
-  "owner": { "name": "patbing" },
+  "owner": {
+    "name": "patbing"
+  },
+  "metadata": {
+    "description": "Made to Measure: an agent skill that fills empty image slots with Pollinations pictures measured by code."
+  },
   "plugins": [
     {
       "name": "made-to-measure",

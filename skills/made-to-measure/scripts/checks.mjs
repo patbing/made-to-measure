@@ -88,7 +88,7 @@ function percentile(values, p) {
   return sorted[Math.min(sorted.length - 1, Math.floor(p * sorted.length))];
 }
 
-/** Contrast of text colour against the zone: the low 10% of per-pixel ratios. */
+/** Contrast of text colour against the zone: the worst 2% of per-pixel ratios (THRESHOLDS.contrastPercentile). */
 export function zoneContrast(buf, textHex, alpha = 0, scrimRgb = [0, 0, 0]) {
   const text = hexToRgb(textHex);
   const ratios = Array.from({ length: count(buf) }, (_, i) => {

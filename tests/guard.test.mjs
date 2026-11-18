@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { generationSize, renderHtml, safeOutput } from "../skills/made-to-measure/scripts/fit.mjs";
+import { generationSize, renderHtml, safeOutput, witnessVerdict, yes } from "../skills/made-to-measure/scripts/fit.mjs";
 import { createTransport, parseJson } from "../skills/made-to-measure/scripts/pollinations.mjs";
 
 test("slot paths stay inside the project and are image files", () => {
@@ -50,4 +50,27 @@ test("the HTML report escapes model and repository text", () => {
   assert.ok(!html.includes("<script>x"));
   assert.ok(!html.includes("<img onerror"));
   assert.ok(html.includes("&#60;script&#62;x"));
+});
+
+test("witness answers: words and JSON booleans read the same way", () => {
+  for (const v of ["yes", "Yes.", " y", true, "true"]) assert.equal(yes(v), true, String(v));
+  for (const v of ["no", "No.", false, "false", undefined, ""]) assert.equal(yes(v), false, String(v));
+  assert.equal(witnessVerdict({ subject: yes(true), decoy: yes(false), text: yes(true) }).pass, false);
+});
+
+test("a signed-out polli CLI is not taken as signed in", () => {
+  const dir = mkdtempSync(join(tmpdir(), "mtm-polli-"));
+  const saved = { key: process.env.POLLINATIONS_API_KEY, bin: process.env.POLLI_BIN };
+  delete process.env.POLLINATIONS_API_KEY;
+  try {
+    for (const [status, want] of [[{ authenticated: false }, null], [{ authenticated: true }, "polli"]]) {
+      const bin = join(dir, `polli-${want}.mjs`);
+      writeFileSync(bin, `console.log(${JSON.stringify(JSON.stringify(status))});`);
+      process.env.POLLI_BIN = bin;
+      assert.equal(createTransport().mode(), want);
+    }
+  } finally {
+    if (saved.key !== undefined) process.env.POLLINATIONS_API_KEY = saved.key;
+    if (saved.bin === undefined) delete process.env.POLLI_BIN; else process.env.POLLI_BIN = saved.bin;
+  }
 });

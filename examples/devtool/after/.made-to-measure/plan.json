@@ -39,8 +39,8 @@
       "context": "tidewater: folder-to-S3 sync",
       "path": "docs/og.jpg",
       "overlay": null,
-      "subject": "watcher syncing uploads",
-      "prompt": "watcher syncing uploads as a minimalist isometric scene: a command console-shaped slab (generic, no letters) sits above a folder platform, with several file blocks sliding onto a transfer arc and landing into a bucket-like container (no text). Indicate “resumable” via a dotted partial transfer trail that continues smoothly from a break point. Use tide teal and deep sea blue with sea-foam highlights for the moving elements. Background is a smooth gradient ocean haze. Keep composition balanced with generous empty space near the edges; no text or logos."
+      "subject": "lighthouse beam over a calm harbour",
+      "prompt": "lighthouse beam over a calm harbour at dusk, isometric illustration: a small white lighthouse on a rocky point sweeps one steady tide-teal beam across still deep-sea-blue water, a few moored boats as simple shapes, faint ocean mist. Sea-foam highlights on the waves. Wide 1.9:1 composition with the lighthouse left of centre and calm open water on the right. No folders, cables, buckets or devices. No text, letters, numbers, logos or watermarks anywhere."
     },
     {
       "id": "empty-state",

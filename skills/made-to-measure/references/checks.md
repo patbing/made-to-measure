@@ -54,5 +54,8 @@ never the prompt, and answers yes or no, in shuffled order:
 - Is the main subject: <another slot's subject>? (a decoy)
 - Does it contain readable words, letters, numbers, a logo or a watermark?
 
-Passing is yes, no, no. A "yes" to the decoy means the witness is not reliable
-for that picture, and the slot is `UNVERIFIED`, never passed.
+Passing is yes, no, no. A "yes" to the decoy fails the try, and it is repaired
+like any other failure: the picture fits another slot as well as its own, or the
+two subjects are too close (change one in `plan.json`). `UNVERIFIED` means the
+witness call itself failed. Answers may come back as words or JSON booleans;
+both are read.

@@ -238,8 +238,8 @@
       "ref": null,
       "width": 1200,
       "height": 630,
-      "subject": "watcher syncing uploads",
-      "status": "FAILED",
+      "subject": "lighthouse beam over a calm harbour",
+      "status": "PASS",
       "attempts": [
         {
           "n": 1,
@@ -558,8 +558,63 @@
           "problems": [
             "witness: a viewer mistakes it for another slot's subject"
           ]
+        },
+        {
+          "n": 7,
+          "model": "black-forest-labs/flux.1-schnell",
+          "seed": 707337704,
+          "prompt": "lighthouse beam over a calm harbour at dusk, isometric illustration: a small white lighthouse on a rocky point sweeps one steady tide-teal beam across still deep-sea-blue water, a few moored boats as simple shapes, faint ocean mist. Sea-foam highlights on the waves. Wide 1.9:1 composition with the lighthouse left of centre and calm open water on the right. No folders, cables, buckets or devices. No text, letters, numbers, logos or watermarks anywhere.",
+          "generated": {
+            "width": 1200,
+            "height": 624
+          },
+          "checks": [
+            {
+              "name": "size",
+              "value": "1200x630",
+              "pass": true,
+              "rule": "exactly 1200x630, upscaled at most 2x"
+            },
+            {
+              "name": "weight",
+              "value": 29,
+              "pass": true,
+              "rule": "at most 350 KB"
+            },
+            {
+              "name": "detail",
+              "value": 26.9,
+              "pass": true,
+              "rule": "luminance spread at least 10"
+            },
+            {
+              "name": "palette",
+              "value": 0.29,
+              "pass": false,
+              "rule": "advisory: at most 25% of colourful pixels off the brand hues",
+              "advisory": true
+            },
+            {
+              "name": "distinct",
+              "value": "ok",
+              "pass": true,
+              "rule": "differs from every other slot by at least 5 hash bits"
+            }
+          ],
+          "file": ".made-to-measure/attempts/og-7.jpg",
+          "witness": {
+            "answers": {
+              "text": false,
+              "decoy": false,
+              "subject": true
+            },
+            "trusted": true,
+            "pass": true
+          },
+          "problems": []
         }
-      ]
+      ],
+      "final": ".made-to-measure/attempts/og-7.jpg"
     },
     {
       "id": "empty-state",
@@ -731,12 +786,18 @@
         "banner",
         "og"
       ]
+    },
+    {
+      "at": "2026-11-18T13:02:32.806Z",
+      "slots": [
+        "og"
+      ]
     }
   ],
-  "finished": "2026-11-18T12:33:10.234Z",
+  "finished": "2026-11-18T13:02:52.721Z",
   "cost": {
-    "pollen": 0.0365,
-    "calls": 27,
+    "pollen": 0.0386,
+    "calls": 29,
     "note": "Actual cost where the API reported usage, otherwise the call's worst case. Failed calls count."
   }
 }

@@ -47,8 +47,9 @@ export function createTransport({ budget, ledger = [] } = {}) {
     if (key) return (cachedMode = "https");
     if (!polliBin) return (cachedMode = null);
     const out = spawnSync(process.execPath, [polliBin, "auth", "status", "--json"], { encoding: "utf8" });
-    let ok = out.status === 0;
-    try { ok = JSON.parse(out.stdout).loggedIn !== false && ok; } catch {}
+    // `polli auth status --json` exits 0 when signed out too; only the flag says who is signed in
+    let ok = false;
+    try { const s = JSON.parse(out.stdout); ok = out.status === 0 && (s.authenticated === true || s.loggedIn === true); } catch {}
     return (cachedMode = ok ? "polli" : null);
   }
 

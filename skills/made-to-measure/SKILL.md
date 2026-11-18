@@ -60,7 +60,7 @@ It checks Node, ffmpeg and the Pollinations sign-in, and costs nothing.
    - `PASS WITH SCRIM` — only contrast failed; the report gives the smallest
      overlay opacity that passes. Wire the picture in **with** that overlay on the
      text zone.
-   - `UNVERIFIED` — the checking model could not be trusted for this slot. Do not
+   - `UNVERIFIED` — the witness call itself failed, so nobody looked. Do not
      wire it in; tell the user and offer to rerun that slot.
    - `FAILED`, `NOT ATTEMPTED (…)` — leave the placeholder; say why.
 6. **Wire in** passing pictures yourself (the script never edits source): replace
@@ -71,7 +71,7 @@ It checks Node, ffmpeg and the Pollinations sign-in, and costs nothing.
    slots filled, repairs, anything left, and the Pollen spent (from the report).
 
 No project? `node scripts/fit.mjs one "a lighthouse in fog" --size 1200x630 --text-zone left --text-color "#ffffff"`
-makes one measured picture in the current folder.
+makes one measured picture in the current folder (report in `.made-to-measure/`).
 
 ## The checks
 
@@ -80,7 +80,7 @@ makes one measured picture in the current folder.
 | size | ffprobe on the final file | exactly the slot size, upscaled at most 2× |
 | weight | file bytes after the JPEG quality ladder | at most 350 KB (or the slot's `max_kb`) |
 | detail | luminance spread at 64×64 | at least 10 (not blank or flat) |
-| contrast | each text-zone pixel against the text colour, WCAG formula | the worst 2% of pixels still reach 4.5:1 (3:1 large) |
+| contrast | text-zone pixels (48×48 sample) against the text colour, WCAG formula | the worst 2% of pixels still reach 4.5:1 (3:1 large) |
 | palette (note only) | Lab hue of colourful pixels | reported, never blocks: at most 25% more than 25° from every brand hue |
 | distinct | 64-bit difference hash | differs from every other slot |
 | witness | a second model sees only the picture: is it the subject, is it another slot's subject, is there text? | yes, no, no |
@@ -94,7 +94,7 @@ Details and formulas: [references/checks.md](references/checks.md).
   `tongyi-mai/z-image-turbo` (last repair, 0.004), `openai/gpt-6-luna` (witness).
 - Every model is looked up in the live catalog first; a paid-only model is refused
   unless you pass `--allow-paid`.
-- `--budget <pollen>` (default 0.10) stops before any call whose worst case would
+- `--budget <pollen>` (default 0.10 per run of `plan` or `make`) stops before any call whose worst case would
   pass it. Failed calls count. Every call is in `.made-to-measure/receipt.json`.
 - Five slots cost about 0.012 Pollen when everything passes first time.
 

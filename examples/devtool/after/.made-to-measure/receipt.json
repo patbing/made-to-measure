@@ -214,5 +214,21 @@
     "cost": 0.000109,
     "ms": 7289,
     "ok": true
+  },
+  {
+    "step": "image",
+    "model": "black-forest-labs/flux.1-schnell",
+    "worst": 0.002,
+    "cost": 0.002,
+    "ms": 9721,
+    "ok": true
+  },
+  {
+    "step": "witness",
+    "model": "openai/gpt-6-luna",
+    "worst": 0.00046,
+    "cost": 0.000101,
+    "ms": 8594,
+    "ok": true
   }
 ]

@@ -36,8 +36,8 @@ OG card for the docs"* or *"this README needs a banner"*.
 node skills/made-to-measure/scripts/fit.mjs one "a lighthouse in fog" --size 1200x630 --text-zone left --text-color "#ffffff"
 ```
 
-Draws, crops to exactly 1200×630, measures, repairs if needed, and writes the
-picture and its report to the current folder.
+Draws, crops to exactly 1200×630, measures and repairs if needed. The picture
+lands in the current folder, the report and receipt in `.made-to-measure/`.
 
 ## How it works
 
@@ -54,7 +54,7 @@ picture and its report to the current folder.
 | size | ffprobe on the final file | exactly the slot size, upscaled at most 2× |
 | weight | bytes after a JPEG quality ladder | at most 350 KB (or the slot's limit) |
 | detail | luminance spread at 64×64 | at least 10, so not blank or flat |
-| contrast | every text-zone pixel against the text colour, WCAG formula | the worst 2% still reach 4.5:1 (3:1 for large text) |
+| contrast | text-zone pixels (a 48×48 sample) against the text colour, WCAG formula | the worst 2% still reach 4.5:1 (3:1 for large text) |
 | distinct | 64-bit difference hash | differs from every other slot |
 | witness | a second model sees only the picture: is it this subject, is it another slot's subject, is there text? | yes, no, no |
 | palette | Lab hue of colourful pixels | a note in the report, never blocks |
@@ -69,11 +69,11 @@ Fictional brands, run for real. Each folder has `before/`, `after/`, page
 screenshots, the agent's [`session.md`](examples/zine/session.md), and
 `after/.made-to-measure/` with the plan, the report, the receipt and every attempt.
 
-| Project | Slots | Result | Pollen |
+| Project | Slots | Result | Pollen (plan + make) |
 |---|---|---|---|
 | [bakery](examples/bakery) — light landing page, headline over the hero | 5 | 5 PASS, all on the first try | 0.0115 |
-| [devtool](examples/devtool) — README banner, empty-state picture, docs OG card | 3 | 2 PASS, og FAILED (its subject overlapped the banner's) | 0.0372 |
-| [zine](examples/zine) — dark event page, white title over the hero | 6 | 5 PASS, tote FAILED (lettering on the stickers in 5 of 6 tries) | 0.0632 |
+| [devtool](examples/devtool) — README banner, empty-state picture, docs OG card | 3 | 3 PASS. og failed 6 tries because its subject overlapped the banner's; the agent changed the subject and it passed on the next try | 0.0393 |
+| [zine](examples/zine) — dark event page, white title over the hero | 6 | 5 PASS, tote FAILED (lettering on the stickers in 4 of 6 tries; the other 2 lost the tote bag) | 0.0632 |
 
 | bakery before | bakery after |
 |---|---|
@@ -99,8 +99,9 @@ without network:
   the recorded answers fail the witness rule.
 
 The pilot also changed the rules: the palette check rejected 16 tries; shown to
-the witness afterwards, 8 were clean pictures of the right subject, so palette
-is now a note, not a gate.
+the witness afterwards, 8 were clean pictures of the right subject
+([the 16 answers](examples/controls/palette-rewitness.json)), so palette is now
+a note, not a gate.
 
 ## Models and money
 
@@ -112,16 +113,17 @@ All four default models are on the free tier; you can check each one:
 - `openai/gpt-6-luna` — the witness: https://gen.pollinations.ai/v1/models/openai%2Fgpt-6-luna
 
 Each model is looked up in the live catalog before use, and a paid-only model is
-refused unless you pass `--allow-paid`. `--budget` (default 0.10 Pollen) stops
-before any call whose worst case would pass it; failed calls count. Every call
-is in `.made-to-measure/receipt.json`.
+refused unless you pass `--allow-paid`. `--budget` (default 0.10 Pollen for each
+run of `plan` or `make`) stops before any call whose worst case would pass it;
+failed calls count. The plan call is in `.made-to-measure/plan-receipt.json`,
+every make call in `receipt.json`.
 
 ## What it does not do
 
 - Edit your source. The agent wires pictures in; the script only writes images and reports.
 - Overwrite an existing file without `--overwrite`.
 - Send source files or environment variables anywhere. What leaves the machine:
-  slot sizes, alt text, nearby headings, up to 1,500 characters of the README or
+  the project folder's name, slot sizes, alt text, nearby headings, up to 1,500 characters of the README or
   main page, brand colours, and each finished picture for the witness
   (`--no-witness` skips that).
 - Logos, icons or pictures with words in them.
@@ -132,9 +134,9 @@ is in `.made-to-measure/receipt.json`.
 npm test
 ```
 
-28 tests, no network: the measurements on synthetic pictures, the slot scanner
+30 tests, no network: the measurements on synthetic pictures, the slot scanner
 on a fixture site, the full plan → make → check loop with Pollinations replaced
-by canned replies, the budget ledger, the HTML report's escaping, `verify`, and
+by canned replies, the budget ledger, reading a signed-out CLI as signed out, the HTML report's escaping, `verify`, and
 the ten controls.
 
 ## License

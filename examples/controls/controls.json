@@ -4,37 +4,80 @@
     {
       "id": "text-over-bright-top",
       "file": "examples/bakery/after/img/hero.jpg",
-      "slot": { "width": 1344, "height": 768, "overlay": { "x": 0, "y": 0, "w": 1, "h": 0.4, "color": "#ffffff" } },
-      "fails": ["contrast"],
+      "slot": {
+        "width": 1344,
+        "height": 768,
+        "overlay": {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 0.4,
+          "color": "#ffffff"
+        }
+      },
+      "fails": [
+        "contrast"
+      ],
       "note": "The bakery hero passes with its real text zone (left half). Move white body text to the top 40% and the worst 2% of pixels fall below 4.5:1; a 9% dark scrim fixes it, so make reports PASS WITH SCRIM."
     },
     {
       "id": "text-over-paper",
       "file": "examples/zine/after/img/folding.jpg",
-      "slot": { "width": 600, "height": 600, "overlay": { "x": 0, "y": 0, "w": 0.5, "h": 1, "color": "#ffffff" } },
-      "fails": ["contrast"],
+      "slot": {
+        "width": 600,
+        "height": 600,
+        "overlay": {
+          "x": 0,
+          "y": 0,
+          "w": 0.5,
+          "h": 1,
+          "color": "#ffffff"
+        }
+      },
+      "fails": [
+        "contrast"
+      ],
       "note": "White text on pale paper: about 1.6:1."
     },
     {
       "id": "too-heavy",
       "file": "examples/zine/after/img/hero.jpg",
-      "slot": { "width": 1600, "height": 900, "max_kb": 60 },
-      "fails": ["weight"],
+      "slot": {
+        "width": 1600,
+        "height": 900,
+        "max_kb": 60
+      },
+      "fails": [
+        "weight"
+      ],
       "note": "A slot with a 60 KB limit (an email header, say)."
     },
     {
       "id": "upscaled",
       "file": "examples/zine/after/img/hero.jpg",
-      "slot": { "width": 1600, "height": 900 },
-      "generated": { "width": 640, "height": 360 },
-      "fails": ["size"],
+      "slot": {
+        "width": 1600,
+        "height": 900
+      },
+      "generated": {
+        "width": 640,
+        "height": 360
+      },
+      "fails": [
+        "size"
+      ],
       "note": "Right final size, but stretched 2.5x from what the model drew."
     },
     {
       "id": "flat",
       "file": "examples/controls/flat.jpg",
-      "slot": { "width": 1600, "height": 900 },
-      "fails": ["detail"],
+      "slot": {
+        "width": 1600,
+        "height": 900
+      },
+      "fails": [
+        "detail"
+      ],
       "note": "The zine hero averaged to one colour: what a blank or failed render looks like."
     }
   ],
@@ -43,36 +86,56 @@
       "id": "garbled-lettering",
       "file": "examples/zine/after/.made-to-measure/attempts/hero-3.jpg",
       "slot": "zine/hero",
-      "answers": { "subject": true, "decoy": false, "text": true },
-      "note": "z-image drew a banner of made-up words. Every code check passes; only the witness sees the text."
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": true
+      },
+      "note": "z-image drew a banner of made-up words. Every code check passes; only the witness sees the text. Answers from palette-rewitness.json: this try had stopped at the palette rule during make."
     },
     {
       "id": "sticker-text",
       "file": "examples/zine/after/.made-to-measure/attempts/tote-1.jpg",
       "slot": "zine/tote",
-      "answers": { "subject": true, "text": true, "decoy": false },
-      "note": "Stickers with lettering. Five of six tote attempts had text, so the slot stayed FAILED and kept its placeholder."
+      "answers": {
+        "subject": true,
+        "text": true,
+        "decoy": false
+      },
+      "note": "Stickers with lettering. Four of six tote attempts had text and the other two lost the tote, so the slot stayed FAILED and kept its placeholder."
     },
     {
       "id": "subject-missed",
       "file": "examples/zine/after/.made-to-measure/attempts/tote-6.jpg",
       "slot": "zine/tote",
-      "answers": { "decoy": false, "subject": false, "text": false },
+      "answers": {
+        "decoy": false,
+        "subject": false,
+        "text": false
+      },
       "note": "The last repair removed the text and the tote bag with it."
     },
     {
       "id": "looks-like-another-slot",
       "file": "examples/devtool/after/.made-to-measure/attempts/og-4.jpg",
       "slot": "devtool/og",
-      "answers": { "subject": false, "text": false, "decoy": true },
-      "note": "Subject 'watcher syncing uploads', decoy 'folder-to-S3 sync flow' (the banner). A stranger cannot tell the two apart, so the slot failed. The fix is in the plan: give every slot a subject a stranger can tell apart."
+      "answers": {
+        "subject": false,
+        "text": false,
+        "decoy": true
+      },
+      "note": "Subject 'watcher syncing uploads', decoy 'folder-to-S3 sync flow' (the banner). A stranger cannot tell the two apart. The agent changed the og subject to 'lighthouse beam over a calm harbour' and it passed on the next try."
     },
     {
       "id": "brand-name-in-banner",
       "file": "examples/devtool/after/.made-to-measure/attempts/banner-1.jpg",
       "slot": "devtool/banner",
-      "answers": { "subject": true, "decoy": false, "text": true },
-      "note": "The banner spelled out 'S3'."
+      "answers": {
+        "subject": true,
+        "decoy": false,
+        "text": true
+      },
+      "note": "The banner spelled out 'S3'. Answers from palette-rewitness.json: this try had stopped at the palette rule during make."
     }
   ]
 }

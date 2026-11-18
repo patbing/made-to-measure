@@ -6,12 +6,14 @@
    title over the bottom 40% of the hero:
    `overlay: {x: 0, y: 0.6, w: 1, h: 0.4, color: "#ffffff", large: true}`.
 3. `fit.mjs plan` — 0.0010 Pollen.
-4. `fit.mjs make` — folding (try 3) and comics (try 2) passed; the rest were
-   rejected by the palette rule, then a gate. After it was made advisory,
+4. `fit.mjs make --budget 0.04` — folding (try 3) and comics (try 2) passed.
+   hero and riso stopped at the palette rule, then a gate. tote was stopped by
+   the witness (lettering twice, then no tote bag). og was not attempted: the
+   budget ran out first. After palette was made advisory,
    `fit.mjs make --only hero,riso,tote,og` reran four slots.
 5. Result: hero PASS (try 4, title contrast 11.43:1), riso PASS (try 5), og PASS
-   (try 4, the second image model), **tote FAILED**: five of six tries had
-   lettering on the stickers and the last one lost the tote bag. It keeps its
+   (try 4, the second image model), **tote FAILED**: four of six tries had
+   lettering on the stickers and the two z-image tries lost the tote bag. It keeps its
    picsum placeholder.
 6. Wired in: four picsum URLs replaced by `img/*.jpg`, `og:image` meta added.
 7. `fit.mjs verify` — exit 0. (Verify first flagged riso, folding and comics as

@@ -12,13 +12,16 @@
    At the time the palette rule was a gate and rejected a navy sea for a teal
    brand. Palette was made advisory (see `references/checks.md`) and
    `fit.mjs make --only banner,og` reran the two slots, keeping earlier attempts.
-5. Result: banner PASS (try 4), empty-state PASS, **og FAILED**: on every try
-   the witness said the picture showed the banner's subject. The two subjects
-   overlap; a stranger cannot tell them apart. The og card was not wired in.
-6. Wired in: README.md and docs/index.html point at `docs/banner.jpg` and
-   `docs/empty-state.jpg`. No `og:image` was added.
-7. `fit.mjs verify` — exit 0.
+5. Result: banner PASS (try 4), empty-state PASS, **og FAILED**: on all four
+   tries that reached the witness (2, 4, 5, 6) it said the picture showed the
+   banner's subject. Tries 1 and 3 had stopped at the palette rule. The two
+   subjects overlap; a stranger cannot tell them apart.
+6. The agent changed og in `plan.json`: subject "lighthouse beam over a calm
+   harbour" and a prompt that rules out folders, cables and buckets.
+   `fit.mjs make --only og --budget 0.015` — PASS on try 7, the first try of the
+   new subject.
+7. Wired in: README.md and docs/index.html point at `docs/banner.jpg` and
+   `docs/empty-state.jpg`; docs/index.html got `og:image` → `og.jpg`.
+8. `fit.mjs verify` — exit 0.
 
-Total: 0.0372 Pollen over 27 make calls and the plan call.
-What the agent should do next: give og a subject the banner cannot match
-(say, "lighthouse beam over a calm harbour") and run `make --only og`.
+Total: 0.0393 Pollen over 29 make calls and the plan call.

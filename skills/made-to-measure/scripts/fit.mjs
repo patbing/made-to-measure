@@ -14,6 +14,7 @@ const ZONES = {
   center: { x: 0.2, y: 0.3, w: 0.6, h: 0.4 },
 };
 const MAX_ATTEMPTS = 3;
+const FLAGS = new Set(["force", "update", "overwrite", "no-witness", "allow-paid", "large"]);
 
 function parseArgs(argv) {
   const [cmd, ...rest] = argv;
@@ -23,7 +24,7 @@ function parseArgs(argv) {
     if (!a.startsWith("--")) { opts._.push(a); continue; }
     const name = a.slice(2);
     const next = rest[i + 1];
-    if (next === undefined || next.startsWith("--")) opts[name] = true;
+    if (FLAGS.has(name) || next === undefined || next.startsWith("--")) opts[name] = true;
     else { opts[name] = next; i++; }
   }
   return { cmd, opts };
@@ -127,9 +128,12 @@ export async function witness(t, priced, file, subject, decoy) {
   const user = qs.map(([k, q]) => `${k}: ${q}`).join("\n");
   const reply = await t.json({ step: "witness", model: priced.witness.id, system, user, seed: seed(),
     imageFile: file, pricing: priced.witness.pricing, maxTokens: 800 });
-  const a = Object.fromEntries(Object.entries(reply.answers ?? {}).map(([k, v]) => [k, String(v).toLowerCase().startsWith("y")]));
+  const a = Object.fromEntries(Object.entries(reply.answers ?? {}).map(([k, v]) => [k, yes(v)]));
   return { answers: a, ...witnessVerdict(a) };
 }
+
+/** "yes", "Yes.", true and "true" are yes; anything else is no. */
+export const yes = (v) => v === true || /^\s*(y|true)/i.test(String(v));
 
 /** A viewer must see the subject, no text, and not mistake it for another slot. */
 export function witnessVerdict(a) {
@@ -156,6 +160,8 @@ export async function cmdMake(root, opts) {
     started: new Date().toISOString(), slots: [] };
   const passedHashes = [];
   mkdirSync(join(dir, "attempts"), { recursive: true });
+  // a bad path fails here, before anything is charged, not halfway through the run
+  for (const slot of plan.slots) if (slot.path) safeOutput(root, slot.path);
   // --only a,b: rerun those slots, keep every other slot and all earlier attempts and receipts.
   const only = opts.only ? String(opts.only).split(",") : null;
   const prev = only ? readJson(join(dir, "report.json")) : null;
@@ -205,8 +211,15 @@ export async function cmdMake(root, opts) {
         if (err.code === "BUDGET") { entry.status = "NOT ATTEMPTED (budget)"; break; }
         continue;
       }
-      fitTo(raw, fitted, slot.width, slot.height, slot.max_kb ?? THRESHOLDS.maxKb);
-      const m = measure(fitted, slot, plan.brand?.colors ?? [], gen);
+      let m;
+      try {
+        fitTo(raw, fitted, slot.width, slot.height, slot.max_kb ?? THRESHOLDS.maxKb);
+        m = measure(fitted, slot, plan.brand?.colors ?? [], gen);
+      } catch (err) {
+        // keep going so the report and receipt of calls already paid for are written
+        attempt.error = `could not read the picture: ${err.message.split(/\r?\n/)[0]}`;
+        continue;
+      }
       const near = passedHashes.find((h) => hamming(h, m.hash) < THRESHOLDS.minDistinct);
       m.results.push({ name: "distinct", value: near ? "same as another slot" : "ok", pass: !near,
         rule: `differs from every other slot by at least ${THRESHOLDS.minDistinct} hash bits` });
@@ -356,6 +369,12 @@ async function main() {
       const here = process.cwd();
       const zone = opts["text-zone"] ? ZONES[opts["text-zone"]] : null;
       if (opts["text-zone"] && !zone) throw new Error(`--text-zone is one of ${Object.keys(ZONES).join(", ")}`);
+      if (!subject) throw new Error('say what to draw: fit.mjs one "a lighthouse in fog"');
+      if (existsSync(resolve(here, out)) && !opts.overwrite) throw new Error(`${out} exists; pass --overwrite or --out another file`);
+      const existing = join(workDir(here), "plan.json");
+      if (existsSync(existing) && readJson(existing).slots?.[0]?.kind !== "one") {
+        throw new Error("this folder has a project plan in .made-to-measure/; run `one` in another folder");
+      }
       writeJson(join(workDir(here), "plan.json"), { project: subject, about: subject,
         brand: { colors: opts.palette ? String(opts.palette).split(",") : [] }, direction: null,
         slots: [{ id: "one", kind: "one", file: null, line: null, ref: null, width: w, height: h, alt: subject,
